@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31105.61
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Whut", "Whut.csproj", "{3712048D-23D9-4B05-AE3D-43F80F539EF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3712048D-23D9-4B05-AE3D-43F80F539EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3712048D-23D9-4B05-AE3D-43F80F539EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3712048D-23D9-4B05-AE3D-43F80F539EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3712048D-23D9-4B05-AE3D-43F80F539EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3538BFBF-5F3A-4370-A727-0A578EAFEC1B}
+	EndGlobalSection
+EndGlobal
