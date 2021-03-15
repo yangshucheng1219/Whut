@@ -187,6 +187,11 @@ namespace Whut.Controllers
             return new JsonResult(resultState);
         }
 
+        /// <summary>
+        /// 学生信息的分页查询
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpPost("StudentInfoList")]
         public JsonResult StudentInfoList([FromBody] QueryParameters query) 
         {
