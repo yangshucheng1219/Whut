@@ -28,5 +28,6 @@ namespace Whut.Models
         public int Credits { get; set; }
         public string FinalWork { get; set; }
         public string url { get; set; }
+
     }
 }
