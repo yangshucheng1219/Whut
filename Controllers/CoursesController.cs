@@ -35,6 +35,77 @@ namespace Whut.Controllers
             return _context.Courses.Any(x => x.CourseID == courseid);
         }
 
+        [HttpPut("CourseList")]
+        public async Task<JsonResult> CourseList([FromBody] QueryParameters query ) {
+            PageInfoList pageInfoList = new PageInfoList();
+            int count = _context.Courses.AsNoTracking().Count();
+            pageInfoList.count = count;
+            pageInfoList.pageIndex = query.PageIndex;
+            pageInfoList.pageSize = query.PageSize;
+            if (query.PageIndex <= 0)
+            {
+                var item = await _context.Courses.Take(query.PageSize).ToListAsync();
+                pageInfoList.items = item;
+                pageInfoList.pageIndex = 1;
+            }
+            else if (query.PageSize * query.PageIndex <= pageInfoList.count)
+            {
+                var item = await _context.Courses.AsNoTracking().Skip((query.PageIndex - 1) * query.PageSize).Take(query.PageSize).ToListAsync();
+                pageInfoList.items = item;
+            }
+            else
+            {
+                if (count % query.PageSize == 0)
+                {
+                    var item = await _context.Courses.AsNoTracking().Skip(count - query.PageSize).Take(query.PageSize).ToListAsync();
+                    pageInfoList.items = item;
+                    pageInfoList.pageIndex = count / query.PageSize;
+                }
+                else
+                {
+                    var item = await _context.Courses.AsNoTracking().Skip(count - count % query.PageSize).Take(query.PageSize).ToListAsync();
+                    pageInfoList.items = item;
+                    pageInfoList.pageIndex = count / query.PageSize + 1;
+                }
+            }
+            return new JsonResult(pageInfoList);
+        }
+
+        [HttpPut("UpdateCourse")]
+        public async Task<JsonResult> UpdateCourse(Course course) {
+            ResultState resultState = CheckCookie();
+            if (resultState.Code == 2)
+            {
+
+                var couInDb = await _context.Courses.FindAsync(course);
+                if (couInDb.CourseID == course.CourseID &&
+                    couInDb.Credits == course.Credits &&
+                    couInDb.FinalWork == course.FinalWork &&
+                    couInDb.Title == course.Title &&
+                    couInDb.url == course.url
+                    )
+                {
+                    resultState.Success = false;
+                    resultState.Message = "课程信息没有变化";
+                    return new JsonResult(resultState);
+                }
+                else if (couInDb == null)
+                {
+                    resultState.Success = false;
+                    resultState.Message = "无此课程信息";
+                    return new JsonResult(resultState);
+                }
+                else {
+                    _context.Courses.Update(course);
+                    await _context.SaveChangesAsync();
+                    resultState.Success = true;
+                    resultState.Message = "课程信息更新成功";
+                    return new JsonResult(resultState);
+                }
+            }
+            return new JsonResult(resultState);
+        }
+
         [HttpPost("AddCourse")]
         public async Task<IActionResult> AddCourse(Course course)
         {
